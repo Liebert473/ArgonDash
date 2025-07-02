@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 import Footer from "@/components/common/Footer";
 import UserProfileHeader from "@/components/profile/UserProfileHeader";
 import EditProfileForm from "@/components/profile/EditProfileForm";
-import { supabase } from "@/lib/supabaseClient";
 
 interface ProfileData {
   avatar_url: string;
