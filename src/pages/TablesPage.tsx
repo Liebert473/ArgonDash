@@ -6,8 +6,17 @@ import { useLocation } from "react-router-dom";
 import AuthorsTable from "@/components/tables/AuthorsTable";
 import ProjectsTable from "@/components/tables/ProjectsTable";
 import Footer from "@/components/common/Footer";
+interface ProfileData {
+  avatar_url: string;
+  first_name: string;
+  last_name: string;
+}
 
-const TablesPage: React.FC = () => {
+interface Page {
+  profileData: ProfileData;
+}
+
+const TablesPage: React.FC<Page> = ({ profileData }) => {
   const [scrolled, setScrolled] = useState(false);
   const [openNav, setOpenNav] = useState(false);
 
@@ -49,7 +58,12 @@ const TablesPage: React.FC = () => {
       {/** Main Content */}
       <main className="w-auto xl:ml-70 border-transparent border transition-all duration-200 ease z-50 relative min-h-screen">
         {/** NavBar */}
-        <Navbar openNav={openNav} scrolled={scrolled} toggleNav={toggleNav} />
+        <Navbar
+          openNav={openNav}
+          scrolled={scrolled}
+          toggleNav={toggleNav}
+          avatar_url={profileData.avatar_url}
+        />
         <div className="flex px-4 my-6">
           <AuthorsTable />
         </div>

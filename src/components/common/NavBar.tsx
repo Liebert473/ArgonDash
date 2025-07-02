@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SearchBar from "@/components/common/SearchBar";
 import { useLocation, useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabaseClient";
 
 interface NavBar {
   scrolled: boolean;
   toggleNav: () => void;
   openNav: boolean;
+  avatar_url: string;
 }
 
-const Navbar: React.FC<NavBar> = ({ scrolled, toggleNav, openNav }) => {
+const Navbar: React.FC<NavBar> = ({
+  scrolled,
+  toggleNav,
+  openNav,
+  avatar_url,
+}) => {
   const path = useLocation().pathname;
   const pathName = path.charAt(1).toUpperCase() + path.slice(2);
   const navigate = useNavigate();
@@ -72,7 +79,7 @@ const Navbar: React.FC<NavBar> = ({ scrolled, toggleNav, openNav }) => {
                 className="block px-0 py-2 text-sm font-semibold text-gray-800 transition-all ease-nav-brand cursor-pointer"
               >
                 <Avatar className="rounded-full w-10 h-10 border">
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage src={avatar_url} />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
               </a>

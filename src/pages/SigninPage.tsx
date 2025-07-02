@@ -27,6 +27,27 @@ const SigninPage: React.FC = () => {
     setLoading(false);
   };
 
+  const handleOAuthSignin = async (provider: "google") => {
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: "http://localhost:5173/dashboard",
+        },
+      });
+
+      if (error) {
+        console.log(error.message);
+        setError(error.message);
+      }
+    } catch (err) {
+      console.log(err);
+      setError("An unexpected error occurred during social login.");
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="m-0 font-sans antialiased font-normal bg-white text-start text-base leading-default text-slate-500">
       {/** Main Section */}
@@ -40,6 +61,7 @@ const SigninPage: React.FC = () => {
                   onSignin={handleLogin}
                   error={error || undefined}
                   loading={loading}
+                  onOAuthSignin={handleOAuthSignin}
                 />
                 {/** Banner */}
                 <div className="absolute top-0 right-0 hidden h-full w-6/12 lg:flex p-4">

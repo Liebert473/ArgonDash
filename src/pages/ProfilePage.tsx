@@ -6,8 +6,20 @@ import { useLocation } from "react-router-dom";
 import Footer from "@/components/common/Footer";
 import UserProfileHeader from "@/components/profile/UserProfileHeader";
 import EditProfileForm from "@/components/profile/EditProfileForm";
+import { supabase } from "@/lib/supabaseClient";
 
-const ProfilePage: React.FC = () => {
+interface ProfileData {
+  avatar_url: string;
+  first_name: string;
+  last_name: string;
+}
+
+interface Page {
+  profileData: ProfileData;
+  onUpdateProfileData: () => Promise<void>;
+}
+
+const ProfilePage: React.FC<Page> = ({ profileData, onUpdateProfileData }) => {
   const [scrolled, setScrolled] = useState(false);
   const [openNav, setOpenNav] = useState(false);
 
@@ -51,18 +63,23 @@ const ProfilePage: React.FC = () => {
       {/** Main Content */}
       <main className="w-auto xl:ml-70 border-transparent border transition-all duration-200 ease z-50 relative min-h-screen">
         {/** NavBar */}
-        <Navbar openNav={openNav} scrolled={scrolled} toggleNav={toggleNav} />
+        <Navbar
+          openNav={openNav}
+          scrolled={scrolled}
+          toggleNav={toggleNav}
+          avatar_url={profileData.avatar_url}
+        />
         {/** Row-1 */}
         <div className="flex px-4 mb-6 mt-48">
           <UserProfileHeader
-            avatarSrc="https://github.com/shadcn.png" // Placeholder for Sayo Kravits
-            name="Sayo Kravits"
+            avatarSrc={profileData.avatar_url}
+            name={`${profileData.first_name} ${profileData.last_name}`}
             title="Public Relations"
           />
         </div>
         {/** Row-2 */}
         <div className="flex px-4 mb-6 gap-6">
-          <EditProfileForm />
+          <EditProfileForm onUpdateProfile={onUpdateProfileData} />
         </div>
         <Footer />
       </main>

@@ -10,8 +10,17 @@ import PaymentCardList from "@/components/billing/PaymentCardList";
 import InvoiceList from "@/components/billing/InvoiceList";
 import BillingProfileList from "@/components/billing/BillingProfileList";
 import TransactionList from "@/components/billing/TransactionList";
+interface ProfileData {
+  avatar_url: string;
+  first_name: string;
+  last_name: string;
+}
 
-const BillingPage: React.FC = () => {
+interface Page {
+  profileData: ProfileData;
+}
+
+const BillingPage: React.FC<Page> = ({ profileData }) => {
   const [scrolled, setScrolled] = useState(false);
   const [openNav, setOpenNav] = useState(false);
 
@@ -53,7 +62,12 @@ const BillingPage: React.FC = () => {
       {/** Main Content */}
       <main className="w-auto xl:ml-70 border-transparent border transition-all duration-200 ease z-50 relative min-h-screen">
         {/** NavBar */}
-        <Navbar openNav={openNav} scrolled={scrolled} toggleNav={toggleNav} />
+        <Navbar
+          openNav={openNav}
+          scrolled={scrolled}
+          toggleNav={toggleNav}
+          avatar_url={profileData.avatar_url}
+        />
         {/** Row-1 */}
         <div className="flex px-4 my-6 gap-6 flex-col lg:flex-row">
           <div className="flex flex-col w-full gap-6">

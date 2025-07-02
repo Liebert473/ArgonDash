@@ -9,7 +9,17 @@ import SalesByCountryTable from "@/components/dashboard/SaleByCountryTable";
 import Categories from "@/components/dashboard/Categories";
 import Footer from "@/components/common/Footer";
 
-const DashboardPage: React.FC = () => {
+interface ProfileData {
+  avatar_url: string;
+  first_name: string;
+  last_name: string;
+}
+
+interface Page {
+  profileData: ProfileData;
+}
+
+const DashboardPage: React.FC<Page> = ({ profileData }) => {
   const [scrolled, setScrolled] = useState(false);
   const [openNav, setOpenNav] = useState(false);
 
@@ -90,7 +100,12 @@ const DashboardPage: React.FC = () => {
       {/** Main Content */}
       <main className="w-auto xl:ml-70 border-transparent border transition-all duration-200 ease z-50 relative min-h-screen">
         {/** NavBar */}
-        <Navbar openNav={openNav} scrolled={scrolled} toggleNav={toggleNav} />
+        <Navbar
+          openNav={openNav}
+          scrolled={scrolled}
+          toggleNav={toggleNav}
+          avatar_url={profileData.avatar_url}
+        />
         {/* Info Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 mt-8 px-4">
           {cardData.map((card, index) => (
